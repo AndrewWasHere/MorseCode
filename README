@@ -1,0 +1,40 @@
+Stupid Arduino Tricks: Morse Code
+=================================
+This project served as an introduction to Arduino programming with minimal hardware investment.
+Executing this sketch, the Arduino will accept serial data over the USB port, and convert the
+Morse-legal characters into Morse code on the LED attached to digital pin 13. It will ignore any
+non-Morse legal characters in the serial stream.
+
+In the other direction, the Arduino will decode Morse code keyed in via a button switch attached
+to digital pin 2 into ASCII text that is transmitted as serial data over the USB port.
+
+Hardware
+--------
+Some hard-to-read ASCII art of the Arduino board pinouts:
+
+Arduino
+------+
+     2|------|SW1|----|GND|
+     3|------|LED|----|GND|
+    13|------|LED|----|GND|
+------+
+
+
+GND = Ground
+LED = Light Emitting Diode.
+SW1 = Button switch, nominally OFF.
+
+The switch on pin 2 can be attached directly to ground because the 328 has a built-in pull-up
+resistor on it. The software just has to remember to turn the pin on when configuring it. Notice
+that keying the switch will pull pin 2 to ground, so a LOW signal represents keying, and a HIGH
+not keying -- reverse of what you might think. Why? Because I had nominally off switches and didn't
+want to buy nominally on ones. "Minimal hardware investment," remember? Also notice that there's
+no debouncing hardware in the circuit. Debouncing is handled in software. "Minimal hardware
+investment" again.
+
+The LED on pin 3 is used to verify that you are keying correctly on pin 2. It will be on when the
+switch is keyed, and off when it is not.
+
+The LED on pin 13 is used to output Morse code of the ASCII received on the USB serial port. 
+You can use the onboard LED for this purpose, but since the RX and TX LEDs will be flashing right 
+next to that one, it's easier on the eyes to use an external LED.
