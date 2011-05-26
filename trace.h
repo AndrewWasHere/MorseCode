@@ -13,7 +13,7 @@
 #ifndef TRACE_H
 #define TRACE_H
 
-#define TRACE 1
+#define TRACE 0
 #define TRACE_STATE 0
 #define TRACE_ATM_OUTPUT 0
 

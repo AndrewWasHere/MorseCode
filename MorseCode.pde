@@ -16,6 +16,9 @@
 #include "morsetoascii.h"
 #include "trace.h"
 
+// Typedefs
+enum KeyState { KEY_DOWN, KEY_UP };
+
 // Constants
 const int morseKeyPin = 2;
 const int morseKeyLED = 3;
@@ -23,10 +26,11 @@ const int morseOutputPin = 13;
 
 // Common storage.
 unsigned long keyDuration = 0;
+KeyState      keyState = KEY_UP;
 
 // Things that actually do stuff.
-AsciiToMorse  atm;
-MorseToAscii  mta;
+AsciiToMorse atm;
+MorseToAscii mta;
 
 // setup()
 //  
@@ -55,7 +59,10 @@ void loop()
 {  
   // Update timing info.
   atm.timestamp( millis() );
-  mta.timestamp( millis() );
+  if ( keyState == KEY_UP )
+  {
+    mta.timestamp( millis() );
+  }
   
   // Look for ASCII input on the serial port.
   if ( Serial.available() > 0 )
@@ -104,9 +111,7 @@ void loop()
 bool sampleInput()
 { 
   const unsigned long debounceThreshold = 50; // ms
-  enum KeyState { KEY_DOWN, KEY_UP };
   
-  static KeyState state = KEY_UP;
   static int previousLevel = HIGH;
   static unsigned long edgeTime = 0;
   static unsigned long keyDownTime = 0;
@@ -124,18 +129,18 @@ bool sampleInput()
   if ( now - edgeTime > debounceThreshold )
   {
     // Switch debounced
-    if ( level == LOW and state == KEY_UP )
+    if ( level == LOW and keyState == KEY_UP )
     {
       // Key pressed.
       keyDownTime = now;
-      state = KEY_DOWN;
+      keyState = KEY_DOWN;
     }
-    else if ( level == HIGH and state == KEY_DOWN )
+    else if ( level == HIGH and keyState == KEY_DOWN )
     {
       // Key released.
       keyDuration = now - keyDownTime;
       keyAvailable = true;
-      state = KEY_UP;
+      keyState = KEY_UP;
     }
   }
   

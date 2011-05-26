@@ -28,6 +28,8 @@ void MorseToAscii::initializeCodeword()
   {
     codeword[ idx ] = Morse::SPACE;
   }
+  
+  keyInIdx = 0;
 }
 
 void MorseToAscii::keypress( const Morse::MorseCodeElement key )
@@ -123,6 +125,9 @@ void MorseToAscii::timestampEncoding( const unsigned long & now )
   {
     // Convert Morse codeword to ASCII character, and write to serial port.
     Serial.print( Morse::morseToAscii( codeword ) );
+    
+    // Reset codeword.
+    initializeCodeword();
     
     // Change state to EOW_CHECK.
     state = EOW_CHECK;

@@ -36,8 +36,8 @@ class Morse
   static const unsigned long DOT_DURATION = 100;
   static const unsigned long DASH_DURATION = 3 * DOT_DURATION;
   static const unsigned long KEY_SPACE_DURATION = DOT_DURATION;
-  static const unsigned long LETTER_SPACE_DURATION = 3 * DOT_DURATION;
-  static const unsigned long WORD_SPACE_DURATION = 7 * DOT_DURATION;
+  static const unsigned long LETTER_SPACE_DURATION = 5 * DOT_DURATION; // 3 * DOT_DURATION
+  static const unsigned long WORD_SPACE_DURATION = 9 * DOT_DURATION; // 7 * DOT_DURATION
   
   //
   // Interface functions

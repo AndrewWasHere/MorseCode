@@ -47,7 +47,7 @@ class MorseToAscii
   //    ^                                      ^   |
   //    |                            keypress: |   | delta_t > LETTER_SPACE_DURATION:
   //    |                               store, |   | convert Morse to ASCII, and transmit.
-  //    |                            timestamp |   |
+  //    |                            timestamp |   | clear codeword.
   //    |                                      |   V
   //    |                                  +-----------+
   //    +----------------------------------| EOW_CHECK |
